@@ -2,11 +2,6 @@ const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
-/*
-* TODO:
-* - 
-
-*/
 // schema
 const User = require('../models/user');
 const Account = require('../models/account');
