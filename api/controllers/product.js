@@ -57,7 +57,7 @@ exports.create_product = (req, res, next) => {
 exports.product_search = (req, res, next) => {
   // console.log(req.params.search);
 
-  Product.find({ $text: { $search: req.body.name } })
+  Product.find({ $text: { $search: req.params.search } })
     .exec()
     .then(doc => {
       res.status(200).json(doc);
