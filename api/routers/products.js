@@ -35,28 +35,124 @@ const upload = multer({
   },
   fileFilter: fileFilter
 });
+
+
 // no auth
 router.get('/', ProductController.get_all_products);
-router.get('/:search', ProductController.product_search);
+/*
+GET /products
+return [
+    {
+        "price": 21,
+        "_id": "5abefabe55be040b700ec94c",
+        "name": "Harry 1",
+        "quatity": 100,
+        "description": "book i like",
+        "productImage": "tmp\\2018-03-31T03-04-30.465Z1408855658.jpg",
+        "type": "ebook",
+        "__v": 0
+    },
+   ...
+]
+*/
+
+router.get('/search/:search', ProductController.product_search);
+/*
+GET /products/search/harry
+
+retrun [
+  {
+      "price": 21,
+      "_id": "5abefabe55be040b700ec94c",
+      "name": "Harry 1",
+      "quatity": 100,
+      "description": "book i like",
+      "productImage": "tmp\\2018-03-31T03-04-30.465Z1408855658.jpg",
+      "type": "ebook",
+      "__v": 0
+  },
+  {
+      "price": 21,
+      "_id": "5abf06ff2d59fe0e48b4750b",
+      "name": "Harry 1",
+      "quatity": 100,
+      "description": "book i like",
+      "productImage": "tmp\\2018-03-31T03-56-47.505Z1408855658.jpg",
+      "type": "ebook",
+      "__v": 0
+  },
+  {
+      "price": 21,
+      "_id": "5abf3efdb9f9e80cbcb8389a",
+      "name": "Harry 1",
+      "quatity": 100,
+      "description": "book i like",
+      "productImage": "tmp\\2018-03-31T07-55-41.166Z1408855658.jpg",
+      "type": "ebook",
+      "__v": 0
+  }
+]
+*/
+
+router.get('/:productId', ProductController.get_product);
+/*
+GET /products/5abefabe55be040b700ec94c
+
+return {
+  "price": 21,
+  "_id": "5abefabe55be040b700ec94c",
+  "name": "Harry 1",
+  "quatity": 100,
+  "description": "book i like",
+  "productImage": "tmp\\2018-03-31T03-04-30.465Z1408855658.jpg",
+  "type": "ebook",
+  "__v": 0
+}
+*/
 
 // admin auth
-router.patch(
+router.put(
   '/:productId',
   [adminAuth, userAuth],
   ProductController.update_product
 );
+/*
+PUT /products/5abefabe55be040b700ec94c
+{
+	"name": "Like Harry",
+    "quatity": 212,
+    "description": "other descript loremjksfbsfj",
+    "type": "ebook"
+}
+
+return {
+    "message": "Product updated!"
+}
+*/
+
+
 router.delete(
   '/:productId',
   [adminAuth, userAuth],
   ProductController.delete_product
 );
+
+/*
+DELETE /products/5abefabe55be040b700ec94c
+return {
+    "message": "Product deleted"
+}
+
+*/
+
+
 router.post(
   '/',
   [adminAuth, userAuth],
   upload.single('productImage'),
   ProductController.create_product
 );
-// user auqasth
-router.get('/:productId', userAuth, ProductController.get_product);
+
+
 
 module.exports = router;

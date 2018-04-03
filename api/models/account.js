@@ -14,6 +14,7 @@ const accountSchema = mongoose.Schema({
   ],
   historyOrder: [
     {
+      createAt: { type: Date },
       product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
