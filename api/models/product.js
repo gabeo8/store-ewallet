@@ -9,5 +9,6 @@ const productSchema = mongoose.Schema({
   productImage: String,
   type: String
 });
+productSchema.index({name: 'text'})
 
 module.exports = mongoose.model('Product', productSchema);
