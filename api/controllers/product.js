@@ -4,6 +4,7 @@ const Product = require('../models/product');
 
 exports.get_all_products = (req, res, next) => {
   Product.find({})
+    // .select()
     .exec()
     .then(doc => {
       // console.log(doc);
@@ -17,6 +18,13 @@ exports.get_all_products = (req, res, next) => {
     });
 };
 
+/*
+{
+  "name": "gf",
+  "price": 656,
+
+}
+*/
 exports.create_product = (req, res, next) => {
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
@@ -46,8 +54,18 @@ exports.create_product = (req, res, next) => {
     });
 };
 
+exports.product_search = (req, res, next) => {
+  console.log(req.params.search);
+  Product.find({ name: new RegExp(req.params.search) })
+    .exec()
+    .then(doc => {
+      res.status(200).json(doc);
+    })
+    .catch(err => res.status(500).json({ error: err }));
+};
+
 exports.get_product = (req, res, next) => {
-  Product.findOne({_id: req.params.productId})
+  Product.findOne({ _id: req.params.productId })
     .exec()
     .then(doc => {
       // console.log(doc);

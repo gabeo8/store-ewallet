@@ -7,7 +7,6 @@ const User = require('../models/user');
 const Account = require('../models/account');
 
 // no check auth
-
 exports.user_signup = (req, res, next) => {
   User.find({ email: req.body.email })
     .exec()
@@ -116,4 +115,31 @@ exports.user_login = (req, res, next) => {
 exports.user_update = (req, res, next) => {};
 
 // admin auth
-exports.user_delete = (req, res, next) => {};
+exports.get_all_users = (req, res, next) => {
+  User.find({})
+    .select('_id name avatar')
+    .exec()
+    .then(doc => res.status(200).json(doc))
+    .catch(err => {
+      // console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+};
+
+exports.user_delete = (req, res, next) => {
+  User.remove({ _id: req.params.userId })
+    .exec()
+    .then(result => {
+      res.status(200).json({
+        message: 'User deleted'
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+};

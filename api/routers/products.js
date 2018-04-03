@@ -5,13 +5,14 @@ const multer = require('multer');
 
 const Product = require('../models/product');
 const ProductController = require('../controllers/product');
+
 const userAuth = require('../middleware/userAuth');
 const adminAuth = require('../middleware/adminAuth');
 
 // upload server
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, './tmp/');
+    cb(null, './uploads/');
   },
   filename: function(req, file, cb) {
     cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
@@ -36,6 +37,7 @@ const upload = multer({
 });
 // no auth
 router.get('/', ProductController.get_all_products);
+router.get('/:search', ProductController.product_search);
 
 // admin auth
 router.patch(

@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     req.user_data = decoded;
 
     console.log(decoded);
-    if (req.user_data.userId === '5abf05968a7b5b1a60e87914') {
+    if (req.user_data.userId === '5ac26372c7a0981d90c6dc4d') {
       next();
     } else {
       return res.status(401).json({
