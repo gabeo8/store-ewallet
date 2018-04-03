@@ -32,7 +32,7 @@ exports.create_product = (req, res, next) => {
     price: req.body.price,
     quatity: req.body.quatity,
     description: req.body.description,
-    productImage: req.file.path,
+    productImage: req.file.path || 'uploads\\default_product_image.jpg',
     type: req.body.type
   });
 
@@ -81,4 +81,18 @@ exports.get_product = (req, res, next) => {
 
 exports.update_product = (req, res, next) => {};
 
-exports.delete_product = (req, res, next) => {};
+exports.delete_product = (req, res, next) => {
+  Product.remove({ _id: req.params.userId })
+    .exec()
+    .then(result => {
+      res.status(200).json({
+        message: 'Product deleted'
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+};

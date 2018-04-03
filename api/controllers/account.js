@@ -20,8 +20,6 @@ exports.get_info_account = (req, res, next) => {
     });
 };
 
-// exports.check_balanced = (req, res, next) => {};
-
 exports.deposit_account = (req, res, next) => {
   const deposit = {
     createAt: new Date(),
@@ -80,7 +78,3 @@ exports.order_payment = (req, res, next) => {
       res.status(500).json({ error: err });
     });
 };
-
-// exports.get_deposit_history = (req, res, next) => {};
-
-// exports.get_buy_history = (req, res, next) => {};

@@ -41,7 +41,7 @@ router.get('/:search', ProductController.product_search);
 
 // admin auth
 router.patch(
-  ':productId',
+  '/:productId',
   [adminAuth, userAuth],
   ProductController.update_product
 );
@@ -56,7 +56,7 @@ router.post(
   upload.single('productImage'),
   ProductController.create_product
 );
-// user auth
+// user auqasth
 router.get('/:productId', userAuth, ProductController.get_product);
 
 module.exports = router;
