@@ -43,7 +43,7 @@ exports.deposit_account = (req, res, next) => {
         .then(doc => {
           // console.log(doc);
           return res.status(200).json({
-            "message": "Deposit Ok"
+            message: 'Deposit Ok'
           });
         })
         .catch(err => {
@@ -67,12 +67,27 @@ exports.order_payment = (req, res, next) => {
     ownerUid: req.user_data.userId,
     _id: req.body._id
   })
+    .populate('product', 'price')
     .exec()
-    .then(doc => {
-      console.log(doc)
-      // check balance
-      // change status order
-      // push deposit history
+    .then(order => {
+      console.log(order);
+
+      Account.findOne({ accountId: req.user_data.userId })
+        .select('balanced historyOrder')
+        .exec()
+        .then(account => {
+          console.log(order.product.price)
+          console.log(account.balanced);
+          // check balance
+          if (order.product.price <= account.balanced) {
+            // change status order
+            // push deposit history
+          }
+         
+        })
+        .catch(err => {
+          res.status(500).json({ error: err });
+        });
     })
     .catch(err => {
       res.status(500).json({ error: err });

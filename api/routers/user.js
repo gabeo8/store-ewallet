@@ -28,8 +28,7 @@ POST /user/login
   "email": "hongngoc@gmail.com",
   "password": "12232424"
 }
-return 
-{
+return {
   "message": "Auth successful",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvbmduZ29jQGdtYWlsLmNvbSIsInVzZXJJZCI6IjVhYzI1YmU0ZTJkYTE1MDZkY2QxZjUzMiIsImlhdCI6MTUyMjY4Njk5Nn0.P58yLMlmyKw1Yr30B9Ob8M_-ROTm5T8nJOICkvJgze4"
 }
@@ -38,12 +37,30 @@ router.post('/login', UserController.user_login);
 
 // user auth
 
-router.patch('/:userId', userAuth, UserController.user_update);
+router.put('/', userAuth, UserController.user_update);
 
 // admin auth
-router.get('/', [adminAuth, userAuth], UserController.get_all_users);
 /*
-DELETE /user/
+GET /user
+return [
+    {
+        "_id": "5abd05736e88861164777ae1",
+        "name": "Hello"
+    },
+    {
+        "_id": "5abe06bd96e06c10bc51b5fc",
+        "name": "Hello"
+    },
+    ...
+]
+*/
+router.get('/', [adminAuth, userAuth], UserController.get_all_users);
+
+/*
+DELETE /user/5abe06bd96e06c10bc51b5fc
+return {
+    "message": "User deleted"
+}
 */
 router.delete('/:userId', [adminAuth, userAuth], UserController.user_delete);
 

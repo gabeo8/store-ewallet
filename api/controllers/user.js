@@ -112,7 +112,29 @@ exports.user_login = (req, res, next) => {
 };
 
 // user auth
-exports.user_update = (req, res, next) => {};
+exports.user_update = (req, res, next) => {
+  User.update(
+    { _id: req.user_data.userId },
+    {
+      $set: {
+        address: req.body.address,
+        name: req.body.name,
+        phone: req.body.phone
+      }
+    }
+  )
+    .then(result => {
+      res.status(200).json({
+        message: 'User updated!'
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
+    });
+};
 
 // admin auth
 exports.get_all_users = (req, res, next) => {

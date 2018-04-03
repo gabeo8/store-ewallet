@@ -82,7 +82,7 @@ exports.get_product = (req, res, next) => {
 exports.update_product = (req, res, next) => {};
 
 exports.delete_product = (req, res, next) => {
-  Product.remove({ _id: req.params.userId })
+  Product.remove({ _id: req.params.productId })
     .exec()
     .then(result => {
       res.status(200).json({
