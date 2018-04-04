@@ -79,6 +79,7 @@ exports.update_product = (req, res, next) => {
   const update_product = {
     name: req.body.name,
     quatity: req.body.quatity,
+    price: req.body.price,
     description: req.body.description,
     type: req.body.type
   };

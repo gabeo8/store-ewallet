@@ -76,7 +76,7 @@ exports.get_all_orders = (req, res, next) => {
 };
 
 exports.delete_order = (req, res, next) => {
-  Order.remove({ _id: req.params.userId })
+  Order.remove({ _id: req.params.idOrder })
     .exec()
     .then(result => {
       res.status(200).json({
