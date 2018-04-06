@@ -43,7 +43,7 @@ router.post('/deposit', userAuth, AccountController.deposit_account);
 /*
 POST /account/deposit
 {
-  "numberDeposit": 888
+  "balance": 888
 }
 return {
   "message": "Deposit Ok"
