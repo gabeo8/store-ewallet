@@ -1,12 +1,12 @@
 ## Cài đặt
 
-`:sunglasses: Nếu có vấn đề vui lòng mail :mouse: ancs21.ps[at]gmail.com :cat:`
+:sunglasses: Nếu có vấn đề vui lòng mail :mouse: `ancs21.ps[at]gmail.com`  :cat:
 
 Bước 1.
 
 Mở file `.env` thay địa chỉ MONGODB và tài khoản admin (cần tạo user trước và dùng địa chỉ email đó)
 
-`:exclamation: Địa chỉ mặc định có thể bị xóa bất cứ lúc nào`
+:exclamation: `Địa chỉ mặc định có thể bị xóa bất cứ lúc nào`
 
 ```
 MONGODB=
