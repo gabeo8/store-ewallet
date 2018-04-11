@@ -2,7 +2,7 @@
 
 :sunglasses: Nếu có vấn đề vui lòng mail :mouse: `ancs21.ps[at]gmail.com`  :cat:
 
-Bước 1.
+#### Bước 1.
 
 Mở file `.env` thay địa chỉ MONGODB và tài khoản admin (cần tạo user trước và dùng địa chỉ email đó)
 
@@ -13,20 +13,21 @@ MONGODB=
 EMAIL_ADMIN=
 ```
 
-Bước 2.
+#### Bước 2.
+
 Chạy lệnh tại thư mục chính của project
 
-`npm install` hoặc `yarn install`
+```npm install``` hoặc ```yarn install```
 
-Bước 3.
+#### Bước 3.
 
 Chạy chế độ Dev
 
-`npm start` hoặc `yarn start`
+```npm start``` hoặc ```yarn start```
 
 Chạy chế độ Production
 
-`npm run prod` hoặc `yarn prod`
+```npm run prod``` hoặc ```yarn prod```
 
 ## Backend REST API
 
