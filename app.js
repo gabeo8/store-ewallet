@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -11,7 +12,7 @@ const orderRoutes = require('./api/routers/orders');
 const paymentRoutes = require('./api/routers/payment');
 
 mongoose.connect(
-  'mongodb://admin:admin1122334455@hello-shard-00-00-g5tyn.mongodb.net:27017,hello-shard-00-01-g5tyn.mongodb.net:27017,hello-shard-00-02-g5tyn.mongodb.net:27017/test?ssl=true&replicaSet=hello-shard-0&authSource=admin'
+  process.env.MONGODB
 );
 
 app.use(morgan('dev'));
