@@ -12,31 +12,24 @@ exports.get_order = (req, res, next) => {
 };
 
 exports.create_order = (req, res, next) => {
-  Product.findById(req.body.productId)
-    .exec()
-    .then(product => {
-      if (!product) {
-        res.status(404).json({
-          message: 'Product not found'
-        });
-      }
-      const order = new Order({
-        _id: mongoose.Types.ObjectId(),
-        ownerUid: req.user_data.userId,
-        product: req.body.productId,
-        quatityBuy: req.body.quatityBuy
-      });
-      return order.save().then(result => {
-        // console.log(result);
-        res.status(201).json({
-          message: 'Order stored',
-          createdOrder: {
-            _id: result._id,
-            ownerUid: result.ownerUid,
-            product: result.product,
-            quatityBuy: result.quantity
-          }
-        });
+  const order = new Order({
+    _id: mongoose.Types.ObjectId(),
+    ownerUid: req.user_data.userId,
+    products: req.body.products,
+    quatityBuy: req.body.quatityBuy
+  });
+  console.log(order);
+  order
+    .save()
+    .then(result => {
+      res.status(201).json({
+        message: 'Order stored',
+        createdOrder: {
+          _id: result._id,
+          ownerUid: result.ownerUid,
+          product: result.product,
+          quatityBuy: result.quantity
+        }
       });
     })
     .catch(err => {
@@ -54,17 +47,18 @@ exports.update_order = (req, res, next) => {
         status: req.body.status
       }
     }
-  ).then(result => {
-    res.status(200).json({
-      message: 'Product update'
+  )
+    .then(result => {
+      res.status(200).json({
+        message: 'Product update'
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        error: err
+      });
     });
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json({
-      error: err
-    });
-  });
 };
 
 // admin auth

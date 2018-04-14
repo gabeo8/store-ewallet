@@ -68,25 +68,24 @@ exports.order_payment = (req, res, next) => {
     ownerUid: req.user_data.userId,
     _id: req.body._id
   })
-    .populate('product', 'price quatity')
+    .populate('products.product', 'price quatity')
     .exec()
     .then(order => {
-      // console.log(order);
-
       Account.findOne({ accountId: req.user_data.userId })
         .select('balanced historyOrder')
         .exec()
         .then(account => {
           // console.log(order.product.price);
           // console.log(account.balanced);
+          const getPriceOrder = order.products.reduce(
+            (p, c) => p + c.product.price * c.quatityBuy, 0
+          );
           const history_product = {
             createAt: new Date(),
-            paid: order.product.price * order.quatityBuy,
-            product: order.product._id
+            paid: getPriceOrder
           };
-          // console.log(history_product);
-          // check balance
-          const pice_order = order.product.price * order.quatityBuy;
+          // // console.log(history_product);
+          // // check balance
           const balanced_account = account.balanced;
           // change status order
           Order.update(
@@ -101,7 +100,6 @@ exports.order_payment = (req, res, next) => {
           )
             .exec()
             .then(doc => {
-              // console.log(doc);
               return res.status(200).json({
                 message: 'Payment Success'
               });
@@ -113,6 +111,7 @@ exports.order_payment = (req, res, next) => {
               });
             });
           // push deposit history
+          const downBalanced = balanced_account - getPriceOrder;
           Account.update(
             { accountId: req.user_data.userId },
             {
@@ -120,18 +119,18 @@ exports.order_payment = (req, res, next) => {
                 historyOrder: history_product
               },
               $set: {
-                balanced: balanced_account - pice_order
+                balanced: downBalanced
               }
             }
-          ).exec();
+          ).exec()
           // update quatity product
-          // console.log(order.product.quatity);
-
-          Product.findByIdAndUpdate(order.product._id, {
-            $set: {
-              quatity: order.product.quatity - order.quatityBuy
-            }
-          }).exec();
+          order.products.map((v, i) => {
+            Product.findByIdAndUpdate(v.product._id, {
+              $set: {
+                quatity: v.product.quatity - v.quatityBuy
+              }
+            }).exec();
+          });
         })
         .catch(err => {
           res.status(500).json({ error: err });

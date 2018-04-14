@@ -7,14 +7,18 @@ const orderSchema = mongoose.Schema({
     ref: 'User',
     require: true
   },
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
-    require: true
-  },
-  quatityBuy: {
-    type: Number
-  },
+  products: [
+    {
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product',
+        require: true
+      },
+      quatityBuy: {
+        type: Number
+      }
+    }
+  ],
   status: {
     type: String,
     default: 'pending'
