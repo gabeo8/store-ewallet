@@ -52,6 +52,7 @@ return [
    ...
 ]
 */
+router.get('/cator/:cator', ProductController.product_cator);
 
 router.get('/search/:search', ProductController.product_search);
 /*

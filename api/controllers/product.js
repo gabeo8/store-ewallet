@@ -58,6 +58,17 @@ exports.product_search = (req, res, next) => {
     .catch(err => res.status(500).json({ error: err }));
 };
 
+exports.product_cator = (req, res, next) => {
+  // console.log(req.params.search);
+
+  Product.find({ type: req.params.cator  })
+    .exec()
+    .then(doc => {
+      res.status(200).json(doc);
+    })
+    .catch(err => res.status(500).json({ error: err }));
+};
+
 exports.get_product = (req, res, next) => {
   // console.log(req.params.productId);
   Product.findOne({ _id: req.params.productId })
