@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -11,19 +11,16 @@ const accountRoutes = require('./api/routers/account');
 const orderRoutes = require('./api/routers/orders');
 const paymentRoutes = require('./api/routers/payment');
 
-mongoose.connect(
-  process.env.MONGODB
-);
+mongoose.connect(process.env.MONGODB);
 
 app.use(morgan('dev'));
 app.use('/uploads', express.static('uploads'));
+app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
-    extended: true,
-    limit:'50mb'
-  })
+    extended: true
+   })
 );
-app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');

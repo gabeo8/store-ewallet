@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const multer = require('multer');
+const uuidv4 = require('uuid/v4');
+const path = require('path');
 
 const Product = require('../models/product');
 const ProductController = require('../controllers/product');
@@ -9,31 +11,40 @@ const ProductController = require('../controllers/product');
 const userAuth = require('../middleware/userAuth');
 const adminAuth = require('../middleware/adminAuth');
 
-// upload server
+// // upload server
+// const storage = multer.diskStorage({
+//   destination: function(req, file, cb) {
+//     cb(null, './uploads/');
+//   },
+//   filename: function(req, file, cb) {
+//     cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
+//   }
+// });
+
+// const fileFilter = (req, file, cb) => {
+//   // reject a file
+//   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+//     cb(null, true);
+//   } else {
+//     cb(null, false);
+//   }
+// };
+
+// const upload = multer({
+//   storage: storage,
+//   fileFilter: fileFilter
+// });
+
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, './uploads/');
+  destination: (req, file, cb) => {
+    cb(null, './uploads');
   },
-  filename: function(req, file, cb) {
-    cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
+  filename: (req, file, cb) => {
+    const newFilename = `${uuidv4()}${path.extname(file.originalname)}`;
+    cb(null, newFilename);
   }
 });
-
-const fileFilter = (req, file, cb) => {
-  // reject a file
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-
-const upload = multer({
-  storage: storage,
-  fileFilter: fileFilter
-});
-
-
+const upload = multer({ storage });
 // no auth
 router.get('/', ProductController.get_all_products);
 /*
@@ -146,7 +157,7 @@ return {
 
 router.post(
   '/',
-  [adminAuth, userAuth],
+  // [adminAuth, userAuth],
   upload.single('productImage'),
   ProductController.create_product
 );

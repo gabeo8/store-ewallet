@@ -28,7 +28,7 @@ exports.create_product = (req, res, next) => {
     productImage: req.file.path,
     type: req.body.type
   });
-
+console.log(product);
   // save to mongodb
   product
     .save()
