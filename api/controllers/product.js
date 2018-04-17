@@ -25,7 +25,7 @@ exports.create_product = (req, res, next) => {
     price: req.body.price,
     quatity: req.body.quatity,
     description: req.body.description,
-    productImage: req.file.path || 'uploads\\default_product_image.jpg',
+    productImage: req.files.path,
     type: req.body.type
   });
 
