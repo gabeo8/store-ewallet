@@ -59,8 +59,7 @@ Chạy chế độ Production
 |:------|:-----|:------|
 | `_id` | ObjectId | Tạo tự động bởi MongoDB |
 | `ownerUid` | ObjectId | Id chủ đơn hàng |
-| `product` | ObjectId | Id sản phẩm |
-| `quatityBuy` | Number | Số lượng mua |
+| `products` | Array of Object  | Giỏ hàng |
 | `status` | String | Trạng thái đơn hàng |
 
 ### ```account```
