@@ -15,8 +15,7 @@ exports.create_order = (req, res, next) => {
   const order = new Order({
     _id: mongoose.Types.ObjectId(),
     ownerUid: req.user_data.userId,
-    products: req.body.products,
-    quatityBuy: req.body.quatityBuy
+    products: req.body.products
   });
   console.log(order);
   order
@@ -27,8 +26,7 @@ exports.create_order = (req, res, next) => {
         createdOrder: {
           _id: result._id,
           ownerUid: result.ownerUid,
-          product: result.product,
-          quatityBuy: result.quantity
+          products: result.products
         }
       });
     })
