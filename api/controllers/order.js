@@ -13,13 +13,10 @@ exports.get_order = (req, res, next) => {
 
 exports.create_order = (req, res, next) => {
   let array = JSON.parse(req.body.products);
-  let obj = {}
-  obj['products'] = array
-  
   const order = new Order({
     _id: mongoose.Types.ObjectId(),
     ownerUid: req.user_data.userId,
-    products: obj
+    products: array
   });
   console.log(order);
   order
